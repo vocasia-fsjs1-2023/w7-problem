@@ -1,11 +1,11 @@
 /**
  * MOVIE RECOMMENDATION
  *
- * Kamu sedang mengerjakan project database film untuk sebuah website.
- * Fitur yang akan kamu kembangkan adalah rekomendasi film berdasarkan genre.
+ * Kamu sedang mengerjakan project database data untuk sebuah website.
+ * Fitur yang akan kamu kembangkan adalah rekomendasi data berdasarkan genre.
  *
- * Input yang diterima: 1) data film berbentuk array of object, dan 2) genre yang dipilih.
- * Hasil akhir: object berisi data film rating tertinggi pada genre tersebut.
+ * Input yang diterima: 1) data data berbentuk array of object, dan 2) genre yang dipilih.
+ * Hasil akhir: object berisi data data rating tertinggi pada genre tersebut.
  *
  * Lihat contoh eksekusi function untuk output yang diharapkan!
  * Ketika tidak ditemukan kategori yang sesuai, maka akan muncul pesan berbeda.
@@ -66,7 +66,28 @@ let allMovies = [
 function mostRecommended(data, category) {
   let output = {};
   // INSERT YOUR CODE HERE
+  let bestRating = 0;
+  let dataFilm = null;
 
+  for (let i = 0; i < data.length; i++) {
+    const film = data[i];
+    if (film.genre === category && film.rating > bestRating) {
+      bestRating = film.rating;
+      dataFilm = film;
+    }
+  }
+
+  if (dataFilm) {
+    output = {
+      title: dataFilm.title,
+      rating: dataFilm.rating,
+      message: `You should watch this ${category} movie directed by ${dataFilm.director}!`
+    };
+  } else {
+    output = {
+      message: 'We cannot find any movie in that category!'
+    };
+  }
   return output;
 }
 
