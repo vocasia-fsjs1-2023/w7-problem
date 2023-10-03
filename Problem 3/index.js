@@ -66,6 +66,28 @@ let allMovies = [
 function mostRecommended(data, category) {
   let output = {};
   // INSERT YOUR CODE HERE
+  let bestrating = 0;
+  let dataFilm = null;
+
+  for (let i = 0; i < data.length; i++) {
+    const film = data[i];
+    if (film.genre === category && film.rating > bestrating) {
+      bestrating = film.rating;
+      dataFilm = film;
+    }
+  }
+
+  if (dataFilm) {
+    output = {
+      title: dataFilm.title,
+      rating: dataFilm.rating,
+      message: `You should watch this ${category} movie directed by ${dataFilm.director}!`
+    };
+  } else {
+    output = {
+      message: 'We cannnot find any movie in that category!'
+    };
+  }
 
   return output;
 }
