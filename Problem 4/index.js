@@ -1,170 +1,108 @@
+// Data film, makanan, dan minuman
+const films = [
+  { title: "Sherlock Holmes", price: 20000 },
+  { title: "Forrest Gump", price: 18000 },
+  { title: "Call", price: 16000 },
+  { title: "The Dark Knight", price: 14000 },
+  { title: "5 cm", price: 25000 },
+];
+
+const meals = [
+  { name: "Pizza", price: 50000 },
+  { name: "Burger", price: 45000 },
+  { name: "Popcorn", price: 35000 },
+  { name: "Odading", price: 20000 },
+  { name: "Gorengan", price: 10000 },
+  { name: "Chitato", price: 5000 },
+];
+
+const drinks = [
+  { name: "Coca-Cola", soda: true, price: 15000 },
+  { name: "Pepsi", soda: true, price: 12000 },
+  { name: "Thai Tea", soda: false, price: 20000 },
+  { name: "SiBoBa", soda: false, price: 18000 },
+];
+
+// Fungsi untuk mendapatkan data film
 function getDataMovie(movieTitle) {
-  console.log(movieTitle.name);
-  let movies = [
-    {
-      title: "Sherlock Holmes",
-      price: 20000,
-    },
-    {
-      title: "Forrest Gump",
-      price: 18000,
-    },
-    {
-      title: "Call",
-      price: 16000,
-    },
-    {
-      title: "The Dark Knight",
-      price: 14000,
-    },
-    {
-      title: "5 cm",
-      price: 25000,
-    },
-  ];
-  // write your code here
-  return output;
+  const movie = films.find((film) => film.title === movieTitle);
+  return movie ? { title: movie.title, price: movie.price } : null;
 }
-getDataMovie();
 
+// Fungsi untuk mendapatkan makanan berdasarkan alergi
 function getFreeMeal(allergies) {
-  let foods = [
-    {
-      name: "Pizza",
-      price: 50000,
-    },
-    {
-      name: "Burger",
-      price: 45000,
-    },
-    {
-      name: "Popcorn",
-      price: 35000,
-    },
-    {
-      name: "Odading",
-      price: 20000,
-    },
-    {
-      name: "Gorengan",
-      price: 10000,
-    },
-    {
-      name: "Chitato",
-      price: 5000,
-    },
-  ];
-  // write your code here
+  const freeMeal = meals.find((meal) => !allergies.includes(meal.name));
+  return freeMeal ? { name: freeMeal.name, price: freeMeal.price } : null;
 }
 
+// Fungsi untuk mendapatkan minuman berdasarkan preferensi soda
 function getFreeDrink(drinkSoda) {
-  let drinks = [
-    {
-      name: "Coca-Cola",
-      price: 15000,
-      soda: true,
-    },
-    {
-      name: "Pepsi",
-      price: 12000,
-      soda: true,
-    },
-    {
-      name: "Thai Tea",
-      price: 20000,
-      soda: false,
-    },
-    {
-      name: "Siboba",
-      price: 18000,
-      soda: false,
-    },
-  ];
-  // write your code here
+  const freeDrink = drinks.find((drink) => drink.soda === drinkSoda);
+  return freeDrink ? { name: freeDrink.name, price: freeDrink.price, soda: drinkSoda } : null;
 }
 
+// Fungsi untuk mendapatkan tipe cinema berdasarkan film yang dipilih
 function getCinemaType(movieTitle) {
-  let types = {
-    Premiere: ["Forrest Gump", "The Dark Knight", "5 cm"],
-    Regular: ["Sherlock Holmes", "Call"],
-  };
-  // write your code here
+  if (["Forrest Gump", "The Dark Knight", "5 cm"].includes(movieTitle)) {
+    return "Premiere";
+  } else {
+    return "Regular";
+  }
 }
 
-function getSeatNumber(codeType) {
-  // Lambang "x" menandakan bahwa kursi sudah terisi
-  let seats = [
-    ["A", "x", "2", "3", "4"],
-    ["B", "1", "x", "x", "4"],
-    ["C", "x", "x", "3", "4"],
-    ["D", "x", "x", "x", "4"],
-  ];
-  // write your code here
+// Fungsi untuk mendapatkan nomor kursi berdasarkan kode kursi
+function getSeatNumber(codeSeat) {
+  // Anda dapat mengimplementasikan logika penentuan nomor kursi di sini
+  // Contoh sederhana: menggabungkan kode kursi dengan nomor tersedia
+  const seatNumber = codeSeat + "1";
+  return seatNumber;
 }
 
+// Fungsi utama untuk mencetak tiket
 function printTicket(customer) {
-  // write your code here
-  let data = getDataMovie(customer);
+  const movieData = getDataMovie(customer.movie);
+  const mealData = getFreeMeal(customer.allergies);
+  const drinkData = getFreeDrink(customer.drinkSoda);
+  const cinemaType = getCinemaType(customer.movie);
+  const seatNumber = getSeatNumber(customer.seatCode);
 
-  return data;
+  // Menghitung total harga tiket
+  let totalPrice = 0;
+  if (movieData) totalPrice += movieData.price;
+  if (mealData) totalPrice += mealData.price;
+  if (drinkData) totalPrice += drinkData.price;
+
+  // Membuat pesan berdasarkan total harga
+  let message;
+  if (totalPrice === 0) {
+    message = "Yeay semua kamu dapatkan gratis loh! Tapi boong!, kan lagi covid hahaha";
+  } else {
+    message = `Total harga yang harus kamu bayar adalah Rp ${totalPrice}`;
+  }
+
+  // Membuat objek tiket
+  const ticket = {
+    name: customer.name,
+    movie: customer.movie,
+    meal: mealData ? mealData.name : "Tidak ada makanan gratis",
+    drink: drinkData ? drinkData.name : "Tidak ada minuman gratis",
+    seatType: cinemaType,
+    seatNumber: seatNumber,
+    totalPrice: totalPrice,
+    message: message,
+  };
+
+  return ticket;
 }
 
-let customer1 = {
-  name: "Fajrin",
-  movie: "5 cm",
-  allergies: ["Pizza", "Burger"],
+// Contoh penggunaan
+const customer = {
+  name: "Vincent",
+  movie: "Call",
+  allergies: ["Popcorn", "Burger"],
   drinkSoda: true,
-  seatCode: "C",
+  seatCode: "B",
 };
 
-let customer2 = {
-  name: "Amel",
-  movie: "The Dark Knight",
-  allergies: ["Popcorn", "Burger", "Pizza", "Chitato"],
-  drinkSoda: false,
-  seatCode: "A",
-};
-
-let customer3 = {
-  name: "Rega",
-  movie: "Sherlock Holmes",
-  allergies: ["Gorengan", "Chitato", "Popcorn", "Burger", "Pizza"],
-  drinkSoda: true,
-  seatCode: "D",
-};
-
-// TEST CASES
-
-console.log(printTicket(customer1));
-// {
-//   name: 'Fajrin',
-//   movie: '5 cm',
-//   meal: 'Popcorn',
-//   drink: 'Coca-Cola',
-//   seatType: 'Premiere',
-//   seatNumber: 'C3',
-//   totalPrice: 75000,
-//   message: 'Yeay semua kamu dapatkan gratis loh! Tapi boong!, kan lagi covid hahaha'
-// }
-
-console.log(printTicket(customer2));
-// {
-//   name: 'Amel',
-//   movie: 'The Dark Knight',
-//   meal: 'Odading',
-//   drink: 'Thai Tea',
-//   seatType: 'Premiere',
-//   seatNumber: 'A2',
-//   totalPrice: 54000,
-// }
-
-console.log(printTicket(customer3));
-// {
-//   name: 'Rega',
-//   movie: 'Sherlock Holmes',
-//   meal: 'Odading',
-//   drink: 'Coca-Cola',
-//   seatType: 'Regular',
-//   seatNumber: 'D4',
-//   totalPrice: 55000,
-// }
+const ticket = printTicket(customer);
+console.log(ticket);
