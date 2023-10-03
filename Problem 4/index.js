@@ -1,5 +1,5 @@
 function getDataMovie(movieTitle) {
-  console.log(movieTitle.name);
+  console.log(movieTitle);
   let movies = [
     {
       title: "Sherlock Holmes",
@@ -23,9 +23,14 @@ function getDataMovie(movieTitle) {
     },
   ];
   // write your code here
-  return output;
+  for (const movie of movies) {
+    if (movie.title === movieTitle) {
+      return movie;
+    }
+  }
+
+  return null;
 }
-getDataMovie();
 
 function getFreeMeal(allergies) {
   let foods = [
@@ -55,6 +60,13 @@ function getFreeMeal(allergies) {
     },
   ];
   // write your code here
+  for (const food of foods) {
+    if (!allergies.includes(food.name)) {
+      return food;
+    }
+  }
+
+  return null;
 }
 
 function getFreeDrink(drinkSoda) {
@@ -81,6 +93,13 @@ function getFreeDrink(drinkSoda) {
     },
   ];
   // write your code here
+  for (const drink of drinks) {
+    if (drinkSoda === drink.soda) {
+      return drink;
+    }
+  }
+
+  return null;
 }
 
 function getCinemaType(movieTitle) {
@@ -89,6 +108,14 @@ function getCinemaType(movieTitle) {
     Regular: ["Sherlock Holmes", "Call"],
   };
   // write your code here
+
+  for (const type in types) {
+    if (types[type].includes(movieTitle)) {
+      return type;
+    }
+  }
+
+  return null;
 }
 
 function getSeatNumber(codeType) {
@@ -100,13 +127,58 @@ function getSeatNumber(codeType) {
     ["D", "x", "x", "x", "4"],
   ];
   // write your code here
+  let seatNumber = null;
+
+  // Proses pencarian tempat duduk
+  for (let i = 0; i < seats.length; i++) {
+    for (let j = 0; j < seats[i].length; j++) {
+      if (seats[i][j] === codeType) {
+        seatNumber = seats[i][0] + (j + 1);
+        break;
+      }
+    }
+    if (seatNumber !== null) {
+      break;
+    }
+  }
+
+  return seatNumber;
 }
 
 function printTicket(customer) {
   // write your code here
   let data = getDataMovie(customer);
+  const dataMovie = getDataMovie(customer.movie);
+  const freeMeal = getFreeMeal(customer.allergies);
+  const freeDrink = getFreeDrink(customer.drinkSoda);
+  const cinemaType = getCinemaType(customer.movie);
+  const seatNumber = getSeatNumber(customer.seatCode);
 
-  return data;
+  if (!dataMovie) {
+    return "Film tidak ditemukan!";
+  }
+
+  if (!freeMeal) {
+    return "Tidak ada makanan gratis yang tersedia!";
+  }
+
+  if (!freeDrink) {
+    return "Tidak ada minuman gratis yang tersedia!";
+  }
+
+  const totalPrice = dataMovie.price + freeMeal.price + freeDrink.price;
+
+  return {
+    name: customer.name,
+    movie: customer.movie,
+    meal: freeMeal.name,
+    drink: freeDrink.name,
+    seatType: cinemaType,
+    seatNumber: seatNumber,
+    totalPrice: totalPrice,
+    message:
+      "Yeay semua kamu dapatkan gratis loh! Tapi boong!, kan lagi covid hahaha",
+  };
 }
 
 let customer1 = {

@@ -1,6 +1,10 @@
 var arr = [];
 function createObj(name, phase, gender) {
   // YOUR CODE HERE...
+  const newStudent = { name, phase, gender };
+
+  // Menambahkan objek siswa ke dalam array
+  arr.push(newStudent);
 
   // END OF YOUR CODE HERE...
   return arr;
@@ -17,7 +21,13 @@ console.log(arr);
 function getData(name) {
   let result;
   // YOUR CODE HERE...
-
+  // Mencari objek siswa dengan nama yang cocok
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].name === name) {
+      result = arr[i];
+      break;
+    }
+  }
   // END OF YOUR CODE HERE...
   return result;
 }
