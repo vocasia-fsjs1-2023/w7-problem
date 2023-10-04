@@ -34,7 +34,12 @@ let allMovies = [
     director: "Marc Webb",
     rating: 7.8,
   },
-  { title: "The Raid", genre: "action", director: "Gareth Evans", rating: 7.6 },
+  {
+    title: "The Raid",
+    genre: "action",
+    director: "Gareth Evans",
+    rating: 7.6
+  },
   {
     title: "The Raid 2",
     genre: "action",
@@ -65,7 +70,20 @@ let allMovies = [
 
 function mostRecommended(data, category) {
   let output = {};
+  let maxrating = 8.0;
   // INSERT YOUR CODE HERE
+  for (let i of data) {
+    if(i.genre === category && i.rating > maxrating){
+      output = {
+        title : i.title,
+        rating : i.rating,
+        message : `You should watch this ${category} movie directed by ${i.director}!`,
+      };
+      break;
+    }else if(!output.title){
+      output.message = 'We cannot find any movie in that category!';
+    }
+  }
 
   return output;
 }
