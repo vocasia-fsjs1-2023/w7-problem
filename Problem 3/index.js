@@ -14,6 +14,30 @@
  * toString, String, Number, push, pop, typeof, toLowerCase, toUpperCase, toFixed
  *
  */
+function mostRecommended(data, category) {
+  let highestRating = 0;
+  let recommendedMovie = null;
+
+  for (let i = 0; i < data.length; i++) {
+    const movie = data[i];
+    if (movie.genre === category && movie.rating > highestRating) {
+      highestRating = movie.rating;
+      recommendedMovie = movie;
+    }
+  }
+
+  if (recommendedMovie) {
+    return {
+      title: recommendedMovie.title,
+      rating: recommendedMovie.rating,
+      message: `You should watch this ${category} movie directed by ${recommendedMovie.director}!`
+    };
+  } else {
+    return {
+      message: 'We cannot find any movie in that category!'
+    };
+  }
+}
 
 let allMovies = [
   {
