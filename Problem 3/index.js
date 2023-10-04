@@ -1,20 +1,3 @@
-/**
- * MOVIE RECOMMENDATION
- *
- * Kamu sedang mengerjakan project database film untuk sebuah website.
- * Fitur yang akan kamu kembangkan adalah rekomendasi film berdasarkan genre.
- *
- * Input yang diterima: 1) data film berbentuk array of object, dan 2) genre yang dipilih.
- * Hasil akhir: object berisi data film rating tertinggi pada genre tersebut.
- *
- * Lihat contoh eksekusi function untuk output yang diharapkan!
- * Ketika tidak ditemukan kategori yang sesuai, maka akan muncul pesan berbeda.
- *
- * Dilarang memakai built-in function kecuali:
- * toString, String, Number, push, pop, typeof, toLowerCase, toUpperCase, toFixed
- *
- */
-
 let allMovies = [
   {
     title: "The Wages of Fear",
@@ -64,51 +47,34 @@ let allMovies = [
 ];
 
 function mostRecommended(data, category) {
-  let output = {};
-  // INSERT YOUR CODE HERE
+  let highestRating = 0;
+  let recommendedMovie = null;
 
-  return output;
+  // Iterate through the movies to find the highest-rated movie in the specified category
+  for (let i = 0; i < data.length; i++) {
+    const movie = data[i];
+    if (movie.genre === category && movie.rating > highestRating) {
+      highestRating = movie.rating;
+      recommendedMovie = movie;
+    }
+  }
+
+  // Check if a recommended movie was found
+  if (recommendedMovie !== null) {
+    return {
+      title: recommendedMovie.title,
+      rating: recommendedMovie.rating,
+      message: `You should watch this ${category} movie directed by ${recommendedMovie.director}!`,
+    };
+  } else {
+    return {
+      message: 'We cannot find any movie in that category!',
+    };
+  }
 }
 
 console.log(mostRecommended(allMovies, "drama"));
-/*
-{
-  title: 'Shoplifters',
-  rating: 8.1,
-  message: 'You should watch this drama movie directed by Kore-eda Hirokazu!'
-}
-*/
-
 console.log(mostRecommended(allMovies, "action"));
-/*
-{
-  title: 'The Raid 2',
-  rating: 8.2,
-  message: 'You should watch this action movie directed by Gareth Evans!'
-}
-*/
-
 console.log(mostRecommended(allMovies, "documentary"));
-/*
-{
-  title: 'Senyap',
-  rating: 8.3,
-  message: 'You should watch this documentary movie directed by Joshua Oppenheimer!'
-}
-*/
-
 console.log(mostRecommended(allMovies, "thriller"));
-/*
-{
-  title: 'Parasite',
-  rating: 8.6,
-  message: 'You should watch this thriller movie directed by Bong Joon-ho!'
-}
-*/
-
 console.log(mostRecommended(allMovies, "sinetron"));
-/*
-{
-  message: 'We cannot find any movie in that category!'
-}
-*/
