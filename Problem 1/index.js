@@ -1,7 +1,13 @@
 var arr = [];
 function createObj(name, phase, gender) {
   // YOUR CODE HERE...
+  const student = {
+    name: name,
+    phase: phase,
+    gender: gender,
+  };
 
+  arr.push(student);
   // END OF YOUR CODE HERE...
   return arr;
 }
@@ -17,7 +23,13 @@ console.log(arr);
 function getData(name) {
   let result;
   // YOUR CODE HERE...
-
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].name === name) {
+      // If a student with the given name is found, assign it to the result variable
+      result = arr[i];
+      break; // Exit the loop since we've found the student
+    }
+  }
   // END OF YOUR CODE HERE...
   return result;
 }

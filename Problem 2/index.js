@@ -1,51 +1,61 @@
 function getProductsAmount(productsArr) {
-  // Write your code here
-  // EXPECTIATION
-  // Input from customer.products
-  // [
-  //   ["Asus ROG", 2],
-  //   ["Lenovo Legion", 3],
-  // ],
-  // Result
-  // {
-  //   "Asus ROG": 2,
-  //   "Lenovo Legion":3
-  // }
+  // Create an object to store product amounts
+  const productAmounts = {};
+
+  // Iterate through the products array
+  for (const product of productsArr) {
+    const productName = product[0];
+    const amount = product[1];
+
+    // Add the product and its amount to the object
+    productAmounts[productName] = amount;
+  }
+
+  return productAmounts;
 }
 
 function getTotalPrice(productsObj) {
-  const listProduct = [
-    ["Asus ROG", 25000000],
-    ["Lenovo Legion", 22000000],
-    ["Zyrex 1945", 7000000],
-    ["HP Omen", 20000000],
-    ["Acer Predator", 21000000],
-  ];
-  // Write your code here
-  // EXPECTIATION
-  // Input
-  // {
-  //   "Asus ROG": 2,
-  //   "Lenovo Legion":3
-  // }
-  // Result
-  // 121000000 // NUMBER
+  // Define the list of products and their prices
+  const productPrices = {
+    "Asus ROG": 25000000,
+    "Lenovo Legion": 22000000,
+    "Zyrex 1945": 7000000,
+    "HP Omen": 20000000,
+    "Acer Predator": 21000000,
+  };
+
+  let totalPrice = 0;
+
+  // Iterate through the productsObj and calculate the total price
+  for (const productName in productsObj) {
+    const amount = productsObj[productName];
+    const price = productPrices[productName];
+
+    totalPrice += amount * price;
+  }
+
+  return totalPrice;
 }
 
 function getDiscount(memberStatus, totalPrice) {
-  // Write your code here
-  // EXPECTIATION
-  // Input
-  // memberStatus = true
-  // totalPrice = 121000000
-  // Result
-  // 92800000 // NUMBER
+  if (memberStatus) {
+    // Apply a 20% discount for members
+    return totalPrice * 0.8;
+  } else {
+    return totalPrice;
+  }
 }
 
 function shoppingTeros(customer) {
-  // write your code here pakai function yg sudah dibuat diatas didalam sini
-  // EXPECTATION Return berupa string sesuai contoh dibawah
-  // apabila member maka panggil dia pelanggan setia
+  const productsObj = getProductsAmount(customer.products);
+  const totalPrice = getTotalPrice(productsObj);
+  const discountedPrice = getDiscount(customer.member, totalPrice);
+
+  if (customer.member) {
+    return `Hai pelanggan setia ${customer.name}! Total Harga yang harus kamu bayar adalah Rp ${discountedPrice}`;
+  } else {
+    return `Hai ${customer.name}! Total Harga yang harus kamu bayar adalah Rp ${discountedPrice}`;
+  }
 }
 
 let customer1 = {

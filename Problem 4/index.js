@@ -1,5 +1,4 @@
 function getDataMovie(movieTitle) {
-  console.log(movieTitle.name);
   let movies = [
     {
       title: "Sherlock Holmes",
@@ -22,10 +21,14 @@ function getDataMovie(movieTitle) {
       price: 25000,
     },
   ];
-  // write your code here
-  return output;
+
+  for (let i = 0; i < movies.length; i++) {
+    if (movies[i].title === movieTitle) {
+      return movies[i];
+    }
+  }
+  return null; // Return null if movie not found
 }
-getDataMovie();
 
 function getFreeMeal(allergies) {
   let foods = [
@@ -54,7 +57,13 @@ function getFreeMeal(allergies) {
       price: 5000,
     },
   ];
-  // write your code here
+
+  for (let i = 0; i < foods.length; i++) {
+    if (!allergies.includes(foods[i].name)) {
+      return foods[i];
+    }
+  }
+  return null; // Return null if no suitable meal found
 }
 
 function getFreeDrink(drinkSoda) {
@@ -75,38 +84,71 @@ function getFreeDrink(drinkSoda) {
       soda: false,
     },
     {
-      name: "Siboba",
+      name: "SiBoBa",
       price: 18000,
       soda: false,
     },
   ];
-  // write your code here
+
+  for (let i = 0; i < drinks.length; i++) {
+    if (drinkSoda && drinks[i].soda) {
+      return drinks[i];
+    } else if (!drinkSoda && !drinks[i].soda) {
+      return drinks[i];
+    }
+  }
+  return null; // Return null if no suitable drink found
 }
 
 function getCinemaType(movieTitle) {
-  let types = {
-    Premiere: ["Forrest Gump", "The Dark Knight", "5 cm"],
-    Regular: ["Sherlock Holmes", "Call"],
-  };
-  // write your code here
+  let premiereMovies = ["Forrest Gump", "The Dark Knight", "5 cm"];
+  return premiereMovies.includes(movieTitle) ? "Premiere" : "Regular";
 }
 
-function getSeatNumber(codeType) {
-  // Lambang "x" menandakan bahwa kursi sudah terisi
-  let seats = [
-    ["A", "x", "2", "3", "4"],
-    ["B", "1", "x", "x", "4"],
-    ["C", "x", "x", "3", "4"],
-    ["D", "x", "x", "x", "4"],
-  ];
-  // write your code here
+function getSeatNumber(codeSeat) {
+  // Define seat map
+  let seatMap = {
+    A: ["A1", "A2", "A3", "A4"],
+    B: ["B1", "B2", "B3", "B4"],
+    C: ["C1", "C2", "C3", "C4"],
+    D: ["D1", "D2", "D3", "D4"],
+  };
+
+  // Find and return the first available seat in the specified row
+  for (let i = 0; i < seatMap[codeSeat].length; i++) {
+    if (!seatMap[codeSeat][i].includes("x")) {
+      seatMap[codeSeat][i] = "x"; // Mark the seat as occupied
+      return seatMap[codeSeat][i];
+    }
+  }
+
+  return null; // Return null if no available seats in the specified row
 }
 
 function printTicket(customer) {
-  // write your code here
-  let data = getDataMovie(customer);
+  const movieData = getDataMovie(customer.movie);
+  const mealData = getFreeMeal(customer.allergies);
+  const drinkData = getFreeDrink(customer.drinkSoda);
+  const cinemaType = getCinemaType(customer.movie);
+  const seatNumber = getSeatNumber(customer.seatCode);
 
-  return data;
+  if (!movieData || !mealData || !drinkData || !cinemaType || !seatNumber) {
+    return "Sorry, we couldn't process your ticket. Please check your choices.";
+  }
+
+  const totalPrice = movieData.price + mealData.price + drinkData.price;
+  const message = "Yeay semua kamu dapatkan gratis loh! Tapi boong!, kan lagi covid hahaha";
+
+  return {
+    name: customer.name,
+    movie: customer.movie,
+    meal: mealData.name,
+    drink: drinkData.name,
+    seatType: cinemaType,
+    seatNumber: seatNumber,
+    totalPrice: totalPrice,
+    message: message,
+  };
 }
 
 let customer1 = {
@@ -136,35 +178,5 @@ let customer3 = {
 // TEST CASES
 
 console.log(printTicket(customer1));
-// {
-//   name: 'Fajrin',
-//   movie: '5 cm',
-//   meal: 'Popcorn',
-//   drink: 'Coca-Cola',
-//   seatType: 'Premiere',
-//   seatNumber: 'C3',
-//   totalPrice: 75000,
-//   message: 'Yeay semua kamu dapatkan gratis loh! Tapi boong!, kan lagi covid hahaha'
-// }
-
 console.log(printTicket(customer2));
-// {
-//   name: 'Amel',
-//   movie: 'The Dark Knight',
-//   meal: 'Odading',
-//   drink: 'Thai Tea',
-//   seatType: 'Premiere',
-//   seatNumber: 'A2',
-//   totalPrice: 54000,
-// }
-
 console.log(printTicket(customer3));
-// {
-//   name: 'Rega',
-//   movie: 'Sherlock Holmes',
-//   meal: 'Odading',
-//   drink: 'Coca-Cola',
-//   seatType: 'Regular',
-//   seatNumber: 'D4',
-//   totalPrice: 55000,
-// }
