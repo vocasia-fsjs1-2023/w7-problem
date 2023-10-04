@@ -1,5 +1,6 @@
 function getProductsAmount(productsArr) {
   // Write your code here
+
   productAmount = {};
 
   for (const product of productsArr) {
@@ -8,6 +9,7 @@ function getProductsAmount(productsArr) {
   }
 
   return productAmount;
+
   // EXPECTIATION
   // Input from customer.products
   // [
@@ -70,6 +72,7 @@ function getDiscount(memberStatus, totalPrice) {
 
 function shoppingTeros(customer) {
   // write your code here pakai function yg sudah dibuat diatas didalam sini
+
   const productAmount = getProductsAmount(customer.products);
   const totalPrice = getTotalPrice(productAmount);
   const discount = getDiscount(customer.member, totalPrice);
@@ -81,6 +84,7 @@ function shoppingTeros(customer) {
     pesan = `Hai ${customer.name}! Total Harga yang harus kamu bayar adalah Rp ${discount}`;
   }
   return pesan;
+
   // EXPECTATION Return berupa string sesuai contoh dibawah
   // apabila member maka panggil dia pelanggan setia
 }

@@ -3,8 +3,7 @@ function createObj(name, phase, gender) {
   // YOUR CODE HERE...
   var student = {name, phase, gender};
   arr.push(student);
-
-  // END OF YOUR CODE HERE...
+    // END OF YOUR CODE HERE...
   return arr;
 }
 
@@ -22,6 +21,7 @@ function getData(name) {
   result = arr.find(function (student) {
     return student.name === name;
 });
+
   // END OF YOUR CODE HERE...
   return result;
 }
