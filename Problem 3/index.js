@@ -66,6 +66,25 @@ let allMovies = [
 function mostRecommended(data, category) {
   let output = {};
   // INSERT YOUR CODE HERE
+  let ratingTertinggi = 0;
+  let rekomendasiMovie = null;
+  // INSERT YOUR CODE HERE
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].genre === category) {
+      if(data[i].rating > ratingTertinggi) {
+        ratingTertinggi = data[i].rating;
+        rekomendasiMovie = data[i];
+      }
+    }
+  };
+
+  if (rekomendasiMovie) {
+      output.title = rekomendasiMovie.title;
+      output.rating = rekomendasiMovie.rating;
+      output.message = `You should watch this ${category} movie directed by ${rekomendasiMovie.director}!`;
+  } else {
+    output.message = `We cannot find any movie in that category!`;
+  };
 
   return output;
 }
