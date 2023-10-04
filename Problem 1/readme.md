@@ -14,7 +14,7 @@ Hanya boleh menggunakan built-in function untuk menambahkan data dalam array, se
 diberikan 2 buah function bernama createObj(), dan getData(),
 
 - Implementasikan function createObj untuk mendaftarkan siswa dengan input data sesuai object yg dibutuhkan yaitu nama, phase, dan gender.
-- Implementasikan fu nction getData() untuk mendapatkan data hanya dari nama, dengan input nama bisa mendapatkan seluruh data siswa tersebut
+- Implementasikan function getData() untuk mendapatkan data hanya dari nama, dengan input nama bisa mendapatkan seluruh data siswa tersebut
 
 Output yang diharapkan berupa Object Literal dengan format sebagai berikut:
 
