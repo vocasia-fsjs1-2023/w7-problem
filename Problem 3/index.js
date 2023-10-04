@@ -65,9 +65,30 @@ let allMovies = [
 
 function mostRecommended(data, category) {
   let output = {};
+  let ratingTop=0;
+  let rekomendasi=null;
   // INSERT YOUR CODE HERE
 
-  return output;
+  for (let i = 0; i < data.length; i++) {
+    const movie = data[i];
+    // Memeriksa apakah film sesuai dengan kategori yang dicari
+    if (movie.genre === category) {
+      if (movie.rating > ratingTop) {
+        rekomendasi = movie;
+        ratingTop= movie.rating;
+      }
+    }
+  }
+  if (rekomendasi) {
+    return{
+      title:rekomendasi.title,
+      rating:rekomendasi.rating,
+      message:`You should watch this ${category} movie directed by ${rekomendasi.director}!`
+    } 
+  } else {
+    output.message= "We cannot find any movie in that category!";
+  }
+  return output
 }
 
 console.log(mostRecommended(allMovies, "drama"));
