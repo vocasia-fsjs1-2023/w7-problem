@@ -1,5 +1,4 @@
 function getDataMovie(movieTitle) {
-  console.log(movieTitle.name);
   let movies = [
     {
       title: "Sherlock Holmes",
@@ -23,8 +22,10 @@ function getDataMovie(movieTitle) {
     },
   ];
   // write your code here
-  return output;
+  let output = movies.find((movie) => movie.title === movieTitle);
+  return output; // Mengembalikan objek film yang ditemukan
 }
+
 getDataMovie();
 
 function getFreeMeal(allergies) {
@@ -55,6 +56,8 @@ function getFreeMeal(allergies) {
     },
   ];
   // write your code here
+let freeMeal = foods.filter((food) => !allergies.includes(food.name));
+return freeMeal[0];
 }
 
 function getFreeDrink(drinkSoda) {
@@ -81,6 +84,8 @@ function getFreeDrink(drinkSoda) {
     },
   ];
   // write your code here
+  let freeDrink = drinks.filter ((drink) => drink.soda === drinkSoda);
+  return freeDrink[0];
 }
 
 function getCinemaType(movieTitle) {
@@ -89,6 +94,8 @@ function getCinemaType(movieTitle) {
     Regular: ["Sherlock Holmes", "Call"],
   };
   // write your code here
+  let cinemaType = Object.keys(types).find(type => types[type].includes(movieTitle));
+  return cinemaType;
 }
 
 function getSeatNumber(codeType) {
@@ -100,13 +107,39 @@ function getSeatNumber(codeType) {
     ["D", "x", "x", "x", "4"],
   ];
   // write your code here
+  for (let i = 0; i < seats.length; i++) {
+		if (seats[i][0] === codeType) {
+			for (let j = 1; j < seats[i].length; j++) {
+				if (seats[i][j] !== "x") {
+					return codeType + j;
+				}
+			}
+		}
+	}
 }
 
 function printTicket(customer) {
   // write your code here
-  let data = getDataMovie(customer);
+  let movieList = getDataMovie(customer.movie);
+  let mealList = getFreeMeal(customer.allergies);
+  let drinkList = getFreeDrink(customer.drinkSoda);
+  let cinemaType = getCinemaType(customer.movie);
+  let seatNumber = getSeatNumber(customer.seatCode);
 
-  return data;
+  let totalPrice = movieList.price + mealList.price + drinkList.price;
+  
+  let ticket = {
+    name : customer.name,
+    movie : customer.movie,
+    meal : mealList.name,
+    drink : drinkList.name,
+    seatType : cinemaType,
+    seatNumber : seatNumber,
+    totalPrice : totalPrice,
+    message : 'Yeay semua kamu dapatkan gratis loh! Tapi boong!, kan lagi covid hahaha'
+  };
+
+  return ticket;
 }
 
 let customer1 = {
@@ -168,3 +201,5 @@ console.log(printTicket(customer3));
 //   seatNumber: 'D4',
 //   totalPrice: 55000,
 // }
+
+
