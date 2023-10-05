@@ -65,10 +65,27 @@ let allMovies = [
 
 function mostRecommended(data, category) {
   let output = {};
-  // INSERT YOUR CODE HERE
+  let highestRating = 0;
+  let movieRecomendation = null;
+ 
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].genre === category) {
+      if(data[i].rating > highestRating) {
+        highestRating = data[i].rating;
+        movieRecomendation = data[i];
+      }
+    }
+  };
+  if (movieRecomendation) {
+    output.title = movieRecomendation.title;
+    output.rating = movieRecomendation.rating;
+    output.message = `You should watch this ${category} movie directed by ${movieRecomendation.director}!`;
+} else {
+    output.message = `We cannot find any movie in that category!`;
+};
 
   return output;
-}
+};
 
 console.log(mostRecommended(allMovies, "drama"));
 /*
