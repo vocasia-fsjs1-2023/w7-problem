@@ -66,9 +66,28 @@ let allMovies = [
 function mostRecommended(data, category) {
   let output = {};
   // INSERT YOUR CODE HERE
+  const matchingMovies = data.filter(movie => movie.genre.toLowerCase() === category.toLowerCase());
+   
+  let highestRating = 0;
+  let recommendedMovie = null;
 
+  for (let i = 0; i < matchingMovies.length; i++) {
+    if (matchingMovies[i].rating > highestRating) {        highestRating = matchingMovies[i].rating;
+        recommendedMovie = matchingMovies[i];
+      }
+    }
+    if (matchingMovies.length !== 0){
+      output.title = recommendedMovie.title;
+      output.rating = recommendedMovie.rating;
+      output.message = `You should watch this ${category} movie directed by ${recommendedMovie.director}!`;
+    } else {
+    output.message = 'You are not watching any movies in this category!';
+    }
+    
   return output;
 }
+
+
 
 console.log(mostRecommended(allMovies, "drama"));
 /*
