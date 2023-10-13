@@ -1,6 +1,12 @@
 var arr = [];
 function createObj(name, phase, gender) {
   // YOUR CODE HERE...
+  const data = {
+    name: name,
+    phase: phase,
+    gender: gender
+  };
+  arr.push(data);
 
   // END OF YOUR CODE HERE...
   return arr;
@@ -17,7 +23,7 @@ console.log(arr);
 function getData(name) {
   let result;
   // YOUR CODE HERE...
-
+  result = arr.find((bio) => bio.name === name);
   // END OF YOUR CODE HERE...
   return result;
 }
