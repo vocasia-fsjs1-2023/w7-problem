@@ -1,5 +1,11 @@
 function getProductsAmount(productsArr) {
   // Write your code here
+  DataHP = {};
+  for (const product of productsArr) {
+    const [productName, quality] = product;
+    DataHP[productName] = quality;
+  }
+  return DataHP
   // EXPECTIATION
   // Input from customer.products
   // [
@@ -22,6 +28,12 @@ function getTotalPrice(productsObj) {
     ["Acer Predator", 21000000],
   ];
   // Write your code here
+  let Harga = 0;
+  for (const [productName, quality] of Object.entries(productsObj)) {
+    const Hargaproduct = listProduct.find((data) => data[0] === productName)[1];
+    Harga += Hargaproduct * quality;
+  }
+  return Harga;
   // EXPECTIATION
   // Input
   // {
@@ -34,6 +46,14 @@ function getTotalPrice(productsObj) {
 
 function getDiscount(memberStatus, totalPrice) {
   // Write your code here
+  const Discount = 0.20;
+  let Hargaupdate = 0;
+  if (memberStatus) {
+    Hargaupdate = totalPrice - (totalPrice * Discount);
+  }else {
+    Hargaupdate = totalPrice;
+  }
+  return Hargaupdate;
   // EXPECTIATION
   // Input
   // memberStatus = true
