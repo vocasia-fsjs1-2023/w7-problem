@@ -1,28 +1,34 @@
 var arr = [];
-function createObj(name, phase, gender) {
-  // YOUR CODE HERE...
 
-  // END OF YOUR CODE HERE...
+function createObj(name, phase, gender) {
+  // Membuat objek siswa dengan data yang diberikan
+  var student = { name: name, phase: phase, gender: gender };
+  
+  // Menambahkan objek siswa ke dalam array 'arr'
+  arr.push(student);
+  
+  // Mengembalikan array 'arr' yang sudah diperbarui
   return arr;
 }
 
-createObj("Akbar", 1, "male");
-console.log(arr);
-//EXPECTATION [{name: 'Akbar', phase: 1, gender: 'male'}]
-
-createObj("Icha", 1, "female");
-console.log(arr);
-//EXPECTATION [{name: 'Akbar', phase: 1, gender: 'male'}, {name: 'Icha', phase: 1, gender: 'female'}]
-
 function getData(name) {
-  let result;
-  // YOUR CODE HERE...
-
-  // END OF YOUR CODE HERE...
-  return result;
+  // Mencari siswa dengan nama yang sesuai
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].name === name) {
+      // Mengembalikan objek siswa yang sesuai dengan nama
+      return arr[i];
+    }
+  }
+  
+  // Jika tidak ditemukan siswa dengan nama yang sesuai, mengembalikan undefined
+  return undefined;
 }
 
-console.log(getData("Icha"));
-//EXPECTATION {name: 'Icha', phase: 1, gender: 'female'}
-console.log(getData("Abby"));
-//EXPECTATION undefined
+createObj("Akbar", 1, "male");
+console.log(arr); // [{name: 'Akbar', phase: 1, gender: 'male'}]
+
+createObj("Icha", 1, "female");
+console.log(arr); // [{name: 'Akbar', phase: 1, gender: 'male'}, {name: 'Icha', phase: 1, gender: 'female'}]
+
+console.log(getData("Icha")); // {name: 'Icha', phase: 1, gender: 'female'}
+console.log(getData("Abby")); // undefined
