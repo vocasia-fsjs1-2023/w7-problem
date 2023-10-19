@@ -1,4 +1,11 @@
 function getProductsAmount(productsArr) {
+  var productAmount = {};
+  for (var i = 0; i < productsArr.length; i++) {
+    var productName = productsArr[i][0];
+    var quantity = productsArr[i][1];
+    productAmount[productName] = quantity;
+  }
+  return productAmount;
   // Write your code here
   // EXPECTIATION
   // Input from customer.products
@@ -30,6 +37,14 @@ function getTotalPrice(productsObj) {
   // }
   // Result
   // 121000000 // NUMBER
+  let totalPrice = 0;
+  for (const productName in productsObj) {
+    const quantity = productsObj[productName];
+    const productPrice = listProduct.find((product) => product[0] === productName)[1];
+    totalPrice += quantity * productPrice;
+  }
+
+  return totalPrice;
 }
 
 function getDiscount(memberStatus, totalPrice) {
@@ -40,12 +55,26 @@ function getDiscount(memberStatus, totalPrice) {
   // totalPrice = 121000000
   // Result
   // 92800000 // NUMBER
+  if (memberStatus) {
+    return totalPrice * 0.8;
+  } else {
+    return totalPrice;
+  }
 }
 
 function shoppingTeros(customer) {
   // write your code here pakai function yg sudah dibuat diatas didalam sini
   // EXPECTATION Return berupa string sesuai contoh dibawah
   // apabila member maka panggil dia pelanggan setia
+  const productAmount = getProductsAmount(customer.products);
+  const totalPrice = getTotalPrice(productAmount);
+  const discountedPrice = getDiscount(customer.member, totalPrice);
+
+  if (customer.member) {
+    return `Hai pelanggan setia ${customer.name}! Total Harga yang harus kamu bayar adalah Rp ${discountedPrice}`;
+  } else {
+    return `Hai ${customer.name}! Total Harga yang harus kamu bayar adalah Rp ${discountedPrice}`;
+  }
 }
 
 let customer1 = {
